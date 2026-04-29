@@ -1,0 +1,60 @@
+<div class="ticket-form-page">
+  <aside class="sidebar">
+    <h2>Larksenio</h2>
+    <p>HelpDesk Cloud</p>
+
+    <nav>
+      <a routerLink="/dashboard">Dashboard</a>
+      <a routerLink="/tickets">Tickets</a>
+      <a routerLink="/tickets/new" class="active">Nuevo ticket</a>
+    </nav>
+  </aside>
+
+  <main class="content">
+    <header class="page-header">
+      <div>
+        <h1>Nuevo ticket</h1>
+        <p>Registra una nueva solicitud de soporte técnico</p>
+      </div>
+
+      <a routerLink="/tickets" class="back-button">Volver</a>
+    </header>
+
+    <section class="form-card">
+      <form (ngSubmit)="createTicket()" class="ticket-form">
+        <label>Título del ticket</label>
+        <input
+          type="text"
+          name="title"
+          [(ngModel)]="title"
+          placeholder="Ejemplo: No puedo ingresar al sistema"
+          required
+        />
+
+        <label>Descripción</label>
+        <textarea
+          name="description"
+          [(ngModel)]="description"
+          rows="6"
+          placeholder="Describe el problema o solicitud..."
+          required
+        ></textarea>
+
+        <label>Prioridad</label>
+        <select name="priority" [(ngModel)]="priority">
+          <option *ngFor="let item of priorities" [value]="item.value">
+            {{ item.label }}
+          </option>
+        </select>
+
+        <p class="error" *ngIf="errorMessage">
+          {{ errorMessage }}
+        </p>
+
+        <button type="submit" [disabled]="loading">
+          {{ loading ? 'Creando ticket...' : 'Crear ticket' }}
+        </button>
+      </form>
+    </section>
+  </main>
+</div>

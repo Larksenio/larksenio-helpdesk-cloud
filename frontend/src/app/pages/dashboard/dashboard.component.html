@@ -1,0 +1,89 @@
+<div class="dashboard-page">
+  <aside class="sidebar">
+    <h2>Larksenio</h2>
+    <p>HelpDesk Cloud</p>
+
+    <nav>
+      <a routerLink="/dashboard" class="active">Dashboard</a>
+      <a routerLink="/tickets">Tickets</a>
+      <a routerLink="/tickets/new">Nuevo ticket</a>
+    </nav>
+
+    <button (click)="logout()">Cerrar sesión</button>
+  </aside>
+
+  <main class="content">
+    <header>
+      <div>
+        <h1>Dashboard</h1>
+        <p>Bienvenido, {{ user?.name || user?.email }}</p>
+      </div>
+    </header>
+
+    <div class="loading" *ngIf="loading">
+      Cargando estadísticas...
+    </div>
+
+    <div class="error" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+
+    <section class="cards" *ngIf="!loading">
+      <div class="card total">
+        <h3>Total de tickets</h3>
+        <strong>{{ stats.total }}</strong>
+        <p>Solicitudes registradas</p>
+      </div>
+
+      <div class="card open">
+        <h3>Abiertos</h3>
+        <strong>{{ stats.open }}</strong>
+        <p>Tickets pendientes</p>
+      </div>
+
+      <div class="card progress">
+        <h3>En proceso</h3>
+        <strong>{{ stats.inProgress }}</strong>
+        <p>Tickets en atención</p>
+      </div>
+
+      <div class="card resolved">
+        <h3>Resueltos</h3>
+        <strong>{{ stats.resolved }}</strong>
+        <p>Tickets solucionados</p>
+      </div>
+
+      <div class="card closed">
+        <h3>Cerrados</h3>
+        <strong>{{ stats.closed }}</strong>
+        <p>Tickets finalizados</p>
+      </div>
+    </section>
+
+    <section class="cloud-section">
+      <h2>Arquitectura Cloud del proyecto</h2>
+
+      <div class="cloud-grid">
+        <div>
+          <h3>Frontend</h3>
+          <p>Angular + TypeScript</p>
+        </div>
+
+        <div>
+          <h3>Backend</h3>
+          <p>Node.js + Express</p>
+        </div>
+
+        <div>
+          <h3>Base de datos</h3>
+          <p>PostgreSQL Cloud - Neon</p>
+        </div>
+
+        <div>
+          <h3>Seguridad</h3>
+          <p>JWT Authentication</p>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>

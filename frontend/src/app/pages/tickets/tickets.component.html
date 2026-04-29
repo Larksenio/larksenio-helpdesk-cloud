@@ -1,0 +1,84 @@
+<div class="tickets-page">
+  <aside class="sidebar">
+    <h2>Larksenio</h2>
+    <p>HelpDesk Cloud</p>
+
+    <nav>
+      <a routerLink="/dashboard">Dashboard</a>
+      <a routerLink="/tickets" class="active">Tickets</a>
+      <a routerLink="/tickets/new">Nuevo ticket</a>
+    </nav>
+  </aside>
+
+  <main class="content">
+    <header class="page-header">
+      <div>
+        <h1>Tickets</h1>
+        <p>Gestión de solicitudes de soporte técnico</p>
+      </div>
+
+      <a routerLink="/tickets/new" class="new-button">+ Nuevo ticket</a>
+    </header>
+
+    <div class="loading" *ngIf="loading">
+      Cargando tickets...
+    </div>
+
+    <div class="error" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+    <div class="success" *ngIf="successMessage">
+  {{ successMessage }}
+</div>
+
+    <section class="empty" *ngIf="!loading && tickets.length === 0">
+      <h2>No hay tickets registrados</h2>
+      <p>Crea el primer ticket desde el botón “Nuevo ticket”.</p>
+    </section>
+
+    <section class="tickets-grid" *ngIf="!loading && tickets.length > 0">
+      <article class="ticket-card" *ngFor="let ticket of tickets">
+        <div class="ticket-header">
+          <h2>{{ ticket.title }}</h2>
+          <span class="priority" [ngClass]="ticket.priority.toLowerCase()">
+            {{ getPriorityLabel(ticket.priority) }}
+          </span>
+        </div>
+
+        <p class="description">
+          {{ ticket.description }}
+        </p>
+
+        <div class="ticket-info">
+          <span class="status" [ngClass]="ticket.status.toLowerCase()">
+            {{ getStatusLabel(ticket.status) }}
+          </span>
+
+          <span>
+            Creado por: {{ ticket.user?.name || ticket.user?.email }}
+          </span>
+        </div>
+
+       <div class="ticket-footer">
+  <small>
+    {{ ticket.createdAt | date: 'dd/MM/yyyy HH:mm' }}
+  </small>
+
+  <div class="actions">
+    <a [routerLink]="['/tickets', ticket.id]">Ver detalle</a>
+
+    <button
+      *ngIf="isAdmin()"
+      class="delete-button"
+      type="button"
+      [disabled]="deleting"
+      (click)="deleteTicket(ticket.id)"
+    >
+      Eliminar
+    </button>
+  </div>
+</div>
+      </article>
+    </section>
+  </main>
+</div>
